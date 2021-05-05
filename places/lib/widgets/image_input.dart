@@ -6,7 +6,6 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as syspaths;
 
 class ImageInput extends StatefulWidget {
-
   final Function _onSelectImage;
 
   ImageInput(this._onSelectImage);
@@ -23,6 +22,9 @@ class _ImageInputState extends State<ImageInput> {
       source: ImageSource.camera,
       maxWidth: 600,
     );
+    if (imageFile == null) {
+      return;
+    }
     setState(() {
       _storedImage = imageFile;
     });
@@ -61,11 +63,15 @@ class _ImageInputState extends State<ImageInput> {
           width: 10,
         ),
         Expanded(
-          child: FlatButton.icon(
+          child: TextButton.icon(
             onPressed: _takePicture,
             icon: Icon(Icons.camera),
             label: Text("Take Picture"),
-            textColor: Theme.of(context).primaryColor,
+            style: ButtonStyle(
+              textStyle: MaterialStateProperty.all(
+                TextStyle(color: Theme.of(context).primaryColor),
+              ),
+            ),
           ),
         ),
       ],
