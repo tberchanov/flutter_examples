@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/providers/great_places.dart';
 import 'package:places/screens/add_place_screen.dart';
+import 'package:places/screens/place_details_screen.dart';
 import 'package:places/screens/places_list_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -9,9 +10,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  String s;
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -25,6 +23,7 @@ class MyApp extends StatelessWidget {
         home: PlacesListScreen(),
         routes: {
           AddPlaceScreen.routeName: (ctx) => AddPlaceScreen(),
+          PlaceDetailScreen.routeName: (ctx) => PlaceDetailScreen(),
         },
       ),
     );
