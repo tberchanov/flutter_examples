@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:chat/widgets/auth/auth_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,6 +21,7 @@ class _AuthScreenState extends State<AuthScreen> {
     String password,
     String username,
     bool isLogin,
+    File userImageFile,
   ) async {
     AuthResult authResult;
 
@@ -35,10 +39,22 @@ class _AuthScreenState extends State<AuthScreen> {
           email: email,
           password: password,
         );
+
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('user_images')
+            .child(authResult.user.uid + '.jpg');
+        await ref.putFile(userImageFile).onComplete;
+
+        final imageUrl = await ref.getDownloadURL();
         await Firestore.instance
             .collection('users')
             .document(authResult.user.uid)
-            .setData({'username': username, 'email': email});
+            .setData({
+          'username': username,
+          'email': email,
+          'image_url': imageUrl,
+        });
       }
     } on PlatformException catch (err) {
       var message = 'An error occured, please check your credentials!';
