@@ -76,6 +76,9 @@ class _AuthFormState extends State<AuthForm> {
                   if (!_isLogin) UserImagePicker(_pickedImage),
                   TextFormField(
                     key: ValueKey('email'),
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.none,
+                    enableSuggestions: false,
                     validator: (value) {
                       if (value.isEmpty || !value.contains('@')) {
                         return 'Please enter a valid email address';
@@ -90,6 +93,9 @@ class _AuthFormState extends State<AuthForm> {
                   ),
                   if (!_isLogin)
                     TextFormField(
+                      autocorrect: true,
+                      textCapitalization: TextCapitalization.words,
+                      enableSuggestions: false,
                       key: ValueKey('username'),
                       validator: (value) {
                         if (value.isEmpty || value.length < 4) {
